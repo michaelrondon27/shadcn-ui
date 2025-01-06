@@ -6,6 +6,7 @@ const links = [
     { name: "alert dialog", href: "alert-dialog" },
     { name: "badge", href: "badge" },
     { name: "button", href: "button" },
+    { name: "calendar", href: "calendar" },
     { name: "dialog", href: "dialog" },
 ];
 
