@@ -10,7 +10,8 @@ const links = [
     { name: "badge", href: "badge" },
     { name: "button", href: "button" },
     { name: "calendar", href: "calendar" },
-    { name: "dialog", href: "dialog" },
+    { name: "card", href: "card" },
+    { name: "dialog", href: "dialog" }
 ];
 
 export default function DashboardLayout({
