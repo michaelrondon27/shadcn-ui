@@ -1,10 +1,9 @@
 "use client"
 
 import * as React from "react"
-import useEmblaCarousel, {
-    type UseEmblaCarouselType,
-} from "embla-carousel-react"
+import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import Autoplay from "embla-carousel-autoplay";
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -15,6 +14,7 @@ type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
 
 type CarouselProps = {
+    autoplay?: number;
     opts?: CarouselOptions
     plugins?: CarouselPlugin
     orientation?: "horizontal" | "vertical"
@@ -48,6 +48,7 @@ const Carousel = React.forwardRef<
 >(
     (
         {
+            autoplay,
             orientation = "horizontal",
             opts,
             setApi,
@@ -58,6 +59,11 @@ const Carousel = React.forwardRef<
         },
         ref
     ) => {
+        if (autoplay) {
+            plugins = plugins ?? [];
+            plugins.push(Autoplay({ delay: autoplay }))
+        }
+
         const [carouselRef, api] = useEmblaCarousel(
             {
                 ...opts,
