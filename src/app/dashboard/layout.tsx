@@ -4,6 +4,7 @@ const links = [
     { name: "accordion", href: "accordion" },
     { name: "alert", href: "alert" },
     { name: "alert dialog", href: "alert-dialog" },
+    { name: "badge", href: "badge" },
     { name: "button", href: "button" },
     { name: "dialog", href: "dialog" },
 ];
