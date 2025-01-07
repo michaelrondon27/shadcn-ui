@@ -20,7 +20,8 @@ const links = [
     { name: "input OTP", href: "input-otp" },
     { name: "menu bar", href: "menu-bar" },
     { name: "progress", href: "progress" },
-    { name: "sheet", href: "sheet" }
+    { name: "sheet", href: "sheet" },
+    { name: "skeleton", href: "skeleton" }
 ];
 
 export default function DashboardLayout({
