@@ -16,6 +16,7 @@ const links = [
     { name: "combobox", href: "combobox" },
     { name: "command", href: "command" },
     { name: "context menu", href: "context-menu" },
+    { name: "data table", href: "data-table" },
     { name: "dialog", href: "dialog" },
     { name: "input OTP", href: "input-otp" },
     { name: "menu bar", href: "menu-bar" },
