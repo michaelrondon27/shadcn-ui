@@ -19,7 +19,8 @@ const links = [
     { name: "dialog", href: "dialog" },
     { name: "input OTP", href: "input-otp" },
     { name: "menu bar", href: "menu-bar" },
-    { name: "progress", href: "progress" }
+    { name: "progress", href: "progress" },
+    { name: "sheet", href: "sheet" }
 ];
 
 export default function DashboardLayout({
