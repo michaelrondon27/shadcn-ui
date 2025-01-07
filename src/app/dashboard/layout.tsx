@@ -17,7 +17,8 @@ const links = [
     { name: "command", href: "command" },
     { name: "context menu", href: "context-menu" },
     { name: "dialog", href: "dialog" },
-    { name: "menu bar", href: "menu-bar" }
+    { name: "menu bar", href: "menu-bar" },
+    { name: "input OTP", href: "input-otp" }
 ];
 
 export default function DashboardLayout({
