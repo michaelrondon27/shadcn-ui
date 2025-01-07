@@ -23,7 +23,8 @@ const links = [
     { name: "sheet", href: "sheet" },
     { name: "skeleton", href: "skeleton" },
     { name: "slider", href: "slider" },
-    { name: "sooner", href: "sooner" }
+    { name: "sooner", href: "sooner" },
+    { name: "toast", href: "toast" }
 ];
 
 export default function DashboardLayout({
