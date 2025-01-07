@@ -21,7 +21,8 @@ const links = [
     { name: "menu bar", href: "menu-bar" },
     { name: "progress", href: "progress" },
     { name: "sheet", href: "sheet" },
-    { name: "skeleton", href: "skeleton" }
+    { name: "skeleton", href: "skeleton" },
+    { name: "slider", href: "slider" }
 ];
 
 export default function DashboardLayout({
