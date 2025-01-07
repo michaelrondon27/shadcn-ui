@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ColumnDef, ColumnFiltersState, SortingState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -16,6 +17,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [currentStatus, setCurrentStatus] = useState("all");
+    const [columnVisibility, setVisibility] = useState<VisibilityState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
@@ -26,9 +28,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setVisibility,
         onSortingChange: setSorting,
         state: {
             columnFilters,
+            columnVisibility,
             sorting
         }
     });
@@ -56,7 +60,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     } }
                     value={ currentStatus }
                 >
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="ml-2 w-[180px]">
                         <SelectValue placeholder="Status - All" />
                     </SelectTrigger>
 
@@ -76,6 +80,29 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button className="ml-auto" variant="outline">
+                            Columns
+                        </Button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align="end">
+                        {table.getAllColumns().filter(column => column.getCanHide()).map((column) => {
+                            return (
+                                <DropdownMenuCheckboxItem
+                                    checked={ column.getIsVisible() }
+                                    className="capitalize"
+                                    key={ column.id }
+                                    onCheckedChange={ (value) => column.toggleVisibility(!!value) }
+                                >
+                                    { column.id }
+                                </DropdownMenuCheckboxItem>
+                            );
+                        })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
 
             <div className="rounded-md border">

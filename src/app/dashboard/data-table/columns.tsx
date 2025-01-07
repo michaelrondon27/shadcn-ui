@@ -139,6 +139,7 @@ export const columns: ColumnDef<Payment>[] = [
                 </DropdownMenu>
             );
         },
+        enableHiding: false,
         id: "actions"
     }
 ];
