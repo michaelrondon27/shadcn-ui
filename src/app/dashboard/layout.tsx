@@ -24,6 +24,7 @@ const links = [
     { name: "skeleton", href: "skeleton" },
     { name: "slider", href: "slider" },
     { name: "sooner", href: "sooner" },
+    { name: "tabs", href: "tabs" },
     { name: "toast", href: "toast" }
 ];
 
