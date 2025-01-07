@@ -1,7 +1,7 @@
 "use client";
 
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
-import { ColumnDef } from '@tanstack/react-table';
+import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { ColumnDef, SortDirection } from '@tanstack/react-table';
 import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui/badge';
@@ -10,10 +10,33 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 
 import { Payment } from '@/data/payments.data';
 
+const SortedIcon = ({ isSorted }: {isSorted: false | SortDirection}) => {
+    if (isSorted === "asc") {
+        return <ChevronUpIcon className="ml-2 h-4 w-4" />
+    }
+
+    if (isSorted === "desc") {
+        return <ChevronDownIcon className="ml-2 h-4 w-4" />
+    }
+
+    return null;
+}
+
 export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "clientName",
-        header: "Client Name"
+        header: ({ column }) => {
+            return (
+                <Button
+                    onClick={ () => column.toggleSorting(column.getIsSorted() === "asc") }
+                    variant="ghost"
+                >
+                    Client Name
+
+                    <SortedIcon isSorted={ column.getIsSorted() } />
+                </Button>
+            );
+        }
     },
     {
         accessorKey: "status",
@@ -28,7 +51,18 @@ export const columns: ColumnDef<Payment>[] = [
 
             return <Badge capitalize variant={ variant }>{ status }</Badge>
         },
-        header: "Status"
+        header: ({ column }) => {
+            return (
+                <Button
+                    onClick={ () => column.toggleSorting(column.getIsSorted() === "asc") }
+                    variant="ghost"
+                >
+                    Status
+
+                    <SortedIcon isSorted={ column.getIsSorted() } />
+                </Button>
+            );
+        }
     },
     {
         accessorKey: "amount",
@@ -41,11 +75,35 @@ export const columns: ColumnDef<Payment>[] = [
 
             return <div className="text-right font-medium">{ formatted }</div>
         },
-        header: () => <div className="text-right">Amount</div>
+        header: ({ column }) => {
+            return (
+                <div className="text-right">
+                    <Button
+                        onClick={ () => column.toggleSorting(column.getIsSorted() === "asc") }
+                        variant="ghost"
+                    >
+                        Amount
+
+                        <SortedIcon isSorted={ column.getIsSorted() } />
+                    </Button>
+                </div>
+            );
+        }
     },
     {
         accessorKey: "email",
-        header: "Email"
+        header: ({ column }) => {
+            return (
+                <Button
+                    onClick={ () => column.toggleSorting(column.getIsSorted() === "asc") }
+                    variant="ghost"
+                >
+                    Email
+
+                    <SortedIcon isSorted={ column.getIsSorted() } />
+                </Button>
+            );
+        }
     },
     {
         cell: ({ row }) => {
