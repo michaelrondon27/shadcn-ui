@@ -13,21 +13,11 @@ import { Payment } from '@/data/payments.data';
 
 const myCustomFilterFn: FilterFn<Payment> = (row: Row<Payment>, columnId: string, filterValue: any, addMeta: (meta: any) => void) => {
     filterValue = filterValue.toLowerCase();
+
     const filterParts = filterValue.split(" ");
+    const rowValues = `${ row.original.clientName } ${ row.original.email } ${row.original.status}`.toLowerCase();
 
-    if (row.original.email.includes(filterValue)) {
-        return true;
-    }
-
-    if (row.original.clientName.includes(filterValue)) {
-        return true;
-    }
-
-    if (row.original.status.includes(filterValue)) {
-        return true;
-    }
-
-    return true;
+    return filterParts.every((part: string) => rowValues.includes(part));
 };
 
 const SortedIcon = ({ isSorted }: {isSorted: false | SortDirection}) => {
