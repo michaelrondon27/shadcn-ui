@@ -7,9 +7,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const formSchema = z.object({
     email: z.string().email(),
+    gender: z.enum(["male", "female"], { message: "Seleccione" }),
     username: z.string().min(2).max(20)
 });
 
@@ -17,6 +19,7 @@ export default function Page() {
     const form = useForm<z.infer<typeof formSchema>>({
         defaultValues: {
             email: "",
+
             username: ""
         },
         resolver: zodResolver(formSchema)
@@ -59,6 +62,46 @@ export default function Page() {
 
                                 <FormControl>
                                     <Input type="email" { ...field } />
+                                </FormControl>
+
+                                <FormMessage/>
+                            </FormItem>
+                        ) }
+                    />
+
+                    <FormField
+                        control={ form.control }
+                        name="gender"
+                        render={ ({ field }) => (
+                            <FormItem className="space-y-3">
+                                <FormLabel>Gender</FormLabel>
+
+                                <FormControl>
+                                    <RadioGroup
+                                        className="flex flex-col space-y-1"
+                                        defaultValue={ field.value }
+                                        onValueChange={ field.onChange }
+                                    >
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="male" />
+                                            </FormControl>
+
+                                            <FormLabel className="font-normal">
+                                                Male
+                                            </FormLabel>
+                                        </FormItem>
+
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="female" />
+                                            </FormControl>
+
+                                            <FormLabel className="font-normal">
+                                                Female
+                                            </FormLabel>
+                                        </FormItem>
+                                    </RadioGroup>
                                 </FormControl>
 
                                 <FormMessage/>
