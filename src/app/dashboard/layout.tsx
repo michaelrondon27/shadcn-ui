@@ -38,7 +38,7 @@ export default function DashboardLayout({
 }) {
     return (
         <>
-            <nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
+            <nav className="bg-white border-b border-gray-200 fixed z-30 w-full dark:bg-slate-900 dark:border-slate-700">
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start">
@@ -133,20 +133,20 @@ export default function DashboardLayout({
                 </div>
             </nav>
 
-            <div className="flex overflow-hidden bg-white pt-16">
+            <div className="flex overflow-hidden bg-white pt-16 dark:bg-slate-900">
                 <aside
                     aria-label="Sidebar"
                     className="fixed hidden z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
                     id="sidebar"
                 >
-                    <div className="relative flex-1 flex flex-col min-h-0 borderR border-gray-200 bg-white pt-0">
+                    <div className="relative flex-1 flex flex-col min-h-0 borderR border-gray-200 bg-white dark:bg-slate-900 pt-0">
                         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                            <div className="flex-1 px-3 bg-white divide-y space-y-1">
+                            <div className="flex-1 px-3 bg-white divide-y space-y-1 dark:bg-slate-900">
                                 <ul className="space-y-2 pb-2">
                                     {links.map((link) => (
                                         <li key={link.href}>
                                             <Link
-                                                className="text-base capitalize text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+                                                className="text-base capitalize text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group dark:hover:bg-slate-800 dark:text-slate-300"
                                                 href={link.href}
                                             >
                                                 <span className="ml-3">{link.name}</span>
@@ -165,20 +165,20 @@ export default function DashboardLayout({
                 ></div>
 
                 <div
-                    className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64"
+                    className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64 dark:bg-black"
                     id="main-content"
                 >
                     <main>
                         <div className="pt-6 px-4">
                             <div className="w-full min-h-[calc(100vh-230px)]">
-                                <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+                                <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 dark:bg-slate-900">
                                     {children}
                                 </div>
                             </div>
                         </div>
                     </main>
 
-                    <footer className="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4 print:hidden">
+                    <footer className="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4 print:hidden dark:bg-slate-900">
                         <ul className="flex items-center flex-wrap mb-6 md:mb-0">
                             <li>
                                 <a
