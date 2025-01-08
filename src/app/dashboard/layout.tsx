@@ -27,6 +27,7 @@ const links = [
     { name: "slider", href: "slider" },
     { name: "sooner", href: "sooner" },
     { name: "tabs", href: "tabs" },
+    { name: "theme", href: "theme" },
     { name: "toast", href: "toast" }
 ];
 
