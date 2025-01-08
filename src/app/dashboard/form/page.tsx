@@ -12,6 +12,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
 
 import { cn } from "@/lib/utils";
 
@@ -19,14 +20,17 @@ const formSchema = z.object({
     dateOfBirth: z.date({ required_error: "A date of birth is required" }),
     email: z.string().email(),
     gender: z.enum(["male", "female"], { message: "Seleccione" }),
+    marketingEmails: z.boolean().default(false),
     username: z.string().min(2).max(20)
+}).refine((data) => data.marketingEmails === true, {
+    message: "You must agree to receive marketing emails.",
+    path: ["marketingEmails"]
 });
 
 export default function Page() {
     const form = useForm<z.infer<typeof formSchema>>({
         defaultValues: {
             email: "",
-
             username: ""
         },
         resolver: zodResolver(formSchema)
@@ -39,7 +43,7 @@ export default function Page() {
     return (
         <div>
             <Form { ...form }>
-                <form className="grid grid-cols-2 gap-4" onSubmit={ form.handleSubmit(onSubmit) }>
+                <form className="grid grid-cols-1 sm:grid-cols-2 gap-4" onSubmit={ form.handleSubmit(onSubmit) }>
                     <FormField
                         control={ form.control }
                         name="username"
@@ -162,6 +166,31 @@ export default function Page() {
                                 </FormDescription>
 
                                 <FormMessage/>
+                            </FormItem>
+                        ) }
+                    />
+
+                    <FormField
+                        control={ form.control }
+                        name="marketingEmails"
+                        render={ ({ field }) => (
+                            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm col-span-1 sm:col-span-2">
+                                <div className="space-y-0.5">
+                                    <FormLabel>Marketing emails</FormLabel>
+
+                                    <FormDescription>
+                                        Receive emails about your account.
+                                    </FormDescription>
+
+                                    <FormMessage />
+                                </div>
+
+                                <FormControl>
+                                    <Switch
+                                        checked={ field.value }
+                                        onCheckedChange={ field.onChange }
+                                    />
+                                </FormControl>
                             </FormItem>
                         ) }
                     />
