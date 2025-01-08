@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 import { Payment } from '@/data/payments.data';
@@ -23,6 +24,25 @@ const SortedIcon = ({ isSorted }: {isSorted: false | SortDirection}) => {
 }
 
 export const columns: ColumnDef<Payment>[] = [
+    {
+        cell: ({ row }) => (
+            <Checkbox
+                aria-label="Select row"
+                checked={ row.getIsSelected() }
+                onCheckedChange={ (value) => row.toggleSelected(!!value) }
+            />
+        ),
+        enableHiding: false,
+        enableSorting: false,
+        header: ({ table }) => (
+            <Checkbox
+                aria-label="Select all"
+                checked={ table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate") }
+                onCheckedChange={ (value) => table.toggleAllPageRowsSelected(!!value) }
+            />
+        ),
+        id: "select"
+    },
     {
         accessorKey: "clientName",
         header: ({ column }) => {
@@ -140,6 +160,7 @@ export const columns: ColumnDef<Payment>[] = [
             );
         },
         enableHiding: false,
+        enableSorting: false,
         id: "actions"
     }
 ];

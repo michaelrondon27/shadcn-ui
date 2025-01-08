@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+import type { Payment } from "@/data/payments.data";
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data   : TData[];
@@ -18,7 +20,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [currentStatus, setCurrentStatus] = useState("all");
     const [columnVisibility, setVisibility] = useState<VisibilityState>({});
+    const [rowSelection, setRowSelection] = useState({});
     const [sorting, setSorting] = useState<SortingState>([]);
+
+    const isDeleteVisible = Object.keys(rowSelection).length > 0;
 
     const table = useReactTable({
         columns,
@@ -29,10 +34,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setVisibility,
+        onRowSelectionChange: setRowSelection,
         onSortingChange: setSorting,
         state: {
             columnFilters,
             columnVisibility,
+            rowSelection,
             sorting
         }
     });
@@ -80,6 +87,20 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+
+                { isDeleteVisible && (
+                    <Button
+                        className="ml-2"
+                        onClick={ () => {
+                            const ids = table.getSelectedRowModel().rows.map((row) => (row.original as Payment).id);
+
+                            console.log(ids);
+                        } }
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                ) }
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -150,24 +171,31 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     </TableBody>
                 </Table>
 
-                <div className="flex items-center justify-end space-x-2 py-4 mx-2">
-                    <Button
-                        disabled={ !table.getCanPreviousPage() }
-                        onClick={ () => table.previousPage() }
-                        size="sm"
-                        variant="outline"
-                    >
-                        Previous
-                    </Button>
+                <div className="space-x-2 py-4 mx-2">
+                    <div className="flex-1 text-sm text-muted-foreground">
+                        { table.getFilteredSelectedRowModel().rows.length } of{ " " }
+                        { table.getFilteredRowModel().rows.length } row(s) selected
+                    </div>
 
-                    <Button
-                        disabled={ !table.getCanNextPage() }
-                        onClick={ () => table.nextPage() }
-                        size="sm"
-                        variant="outline"
-                    >
-                        Next
-                    </Button>
+                    <div className="flex items-center justify-end space-x-2 py-4 mx-2">
+                        <Button
+                            disabled={ !table.getCanPreviousPage() }
+                            onClick={ () => table.previousPage() }
+                            size="sm"
+                            variant="outline"
+                        >
+                            Previous
+                        </Button>
+
+                        <Button
+                            disabled={ !table.getCanNextPage() }
+                            onClick={ () => table.nextPage() }
+                            size="sm"
+                            variant="outline"
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
