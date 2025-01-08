@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
-import { ColumnDef, SortDirection } from '@tanstack/react-table';
+import { ColumnDef, FilterFn, Row, SortDirection } from '@tanstack/react-table';
 import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,25 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 import { Payment } from '@/data/payments.data';
+
+const myCustomFilterFn: FilterFn<Payment> = (row: Row<Payment>, columnId: string, filterValue: any, addMeta: (meta: any) => void) => {
+    filterValue = filterValue.toLowerCase();
+    const filterParts = filterValue.split(" ");
+
+    if (row.original.email.includes(filterValue)) {
+        return true;
+    }
+
+    if (row.original.clientName.includes(filterValue)) {
+        return true;
+    }
+
+    if (row.original.status.includes(filterValue)) {
+        return true;
+    }
+
+    return true;
+};
 
 const SortedIcon = ({ isSorted }: {isSorted: false | SortDirection}) => {
     if (isSorted === "asc") {
@@ -21,7 +40,7 @@ const SortedIcon = ({ isSorted }: {isSorted: false | SortDirection}) => {
     }
 
     return null;
-}
+};
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -112,6 +131,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "email",
+        filterFn: myCustomFilterFn,
         header: ({ column }) => {
             return (
                 <Button

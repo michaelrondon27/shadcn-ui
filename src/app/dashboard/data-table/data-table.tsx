@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                         table.getColumn("status")?.setFilterValue("")
                         table.getColumn("email")?.setFilterValue(event.target.value);
                     } }
-                    placeholder="Filter emails..."
+                    placeholder="Filter anything... (client name, email, status)"
                     value={ (table.getColumn("email")?.getFilterValue() as string) ?? "" }
                 />
 
